@@ -1,4 +1,4 @@
-package com.kkp.berryfarmer.presentation.start_screen
+package com.kkp.berryfarmer.presentation.berry_bag
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,8 +13,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.kkp.berryfarmer.presentation.start_screen.components.AddBerryButton
-import com.kkp.berryfarmer.presentation.start_screen.components.ShowBerries
+import com.kkp.berryfarmer.presentation.berry_bag.components.AddBerryButton
+import com.kkp.berryfarmer.presentation.berry_bag.components.ShowBerries
 
 @Composable
 fun BerryBagScreen(
