@@ -34,27 +34,6 @@ fun IconSurface(
                     end = 8.dp
                 )
         ) {
-/*            Row(
-                modifier = Modifier
-                .fillMaxSize()
-                    .weight(0.3f)
-            ){
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.3f)
-            ) {
-
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.3f)
-            ) {
-
-            }*/
             IconRow(
                 navController = navController,
                 navRoute = listOf("Tree_Check_Screen") ,
