@@ -1,11 +1,11 @@
 package com.kkp.berryfarmer.presentation.poffin_machine
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kkp.berryfarmer.core.sensors.Accelerometer
 import com.kkp.berryfarmer.domain.model.Berry
 import com.kkp.berryfarmer.domain.repository.BerryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,35 +17,31 @@ import kotlin.math.sqrt
 @HiltViewModel
 class PoffinMachineViewModel @Inject constructor(
     private val repo : BerryRepository,
-    private val accelerometer: Accelerometer
 ) : ViewModel () {
 
-    val berriesUsed = mutableStateOf(mutableListOf<Berry>(Berry(0,"",""), Berry(0,"",""), Berry(0,"","")))
+    private val berriesUsed = mutableStateOf(mutableListOf<Berry>(Berry(0,"",""), Berry(0,"",""), Berry(0,"","")))
     var berries = mutableStateOf(emptyList<Berry>())
     var dialogOpen by mutableStateOf(false)
     var berryIndex by mutableStateOf(0)
-    var prevAccl by mutableStateOf(0.0)
+    var shakeStarted by mutableStateOf(0L)
+    var poffinDone by mutableStateOf(false)
 
     init {
         getBerriesToChose()
     }
 
-    /*fun getAcceleration(){
-        accelerometer.startListening()
-        accelerometer.setOnSensorValuesChangedListener { values ->
-            val x = values[0]
-            val y = values[1]
-            val z = values[2]
-            var delta = 0.0
-            val accl = sqrt((x*x)+(y*y)+(z*z))
-            delta = accl - prevAccl
-            prevAccl = accl.toDouble()
-        }
-    }*/
-
-
     fun chooseBerry(index : Int){
         berryIndex = index
+    }
+
+    fun startShaking (tmstp : Long){
+        shakeStarted = tmstp
+    }
+
+    fun timeOfShaking (newTmstp : Long) : Boolean {
+        Log.d("accel", "${(newTmstp - shakeStarted)}")
+
+        return ((newTmstp - shakeStarted) in (10000L..11000L))
     }
 
     fun openDialog(){
@@ -57,7 +53,7 @@ class PoffinMachineViewModel @Inject constructor(
 
 
     fun getBerriesToChose () {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch (Dispatchers.IO){
             repo.getBerriesFromRoom().collect(){
                 berries.value = it
             }

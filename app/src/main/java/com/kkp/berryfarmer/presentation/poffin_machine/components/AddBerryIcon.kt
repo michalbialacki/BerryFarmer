@@ -71,7 +71,6 @@ fun AddBerryIcon(
                     .clickable {
                         viewModel.openDialog()
                         viewModel.chooseBerry(index)
-                        Log.d("Holownia", "AddBerryIcon: ${viewModel.dialogOpen}")
                     }
             )
         }

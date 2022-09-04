@@ -10,12 +10,12 @@ import com.kkp.berryfarmer.domain.repository.BerryRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 class AppModule {
     @Provides
     fun provideBerryDb(
@@ -38,5 +38,4 @@ class AppModule {
     ) : BerryRepository = BerryRepositoryImpl(
         berryDao = berryDao
     )
-
 }

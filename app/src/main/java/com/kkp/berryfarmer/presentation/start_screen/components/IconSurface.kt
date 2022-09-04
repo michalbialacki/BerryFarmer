@@ -11,11 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.R
+import com.kkp.berryfarmer.domain.model.Berry
 import com.kkp.berryfarmer.ui.theme.BerryFarmerTheme
 
 @Composable
 fun IconSurface(
-    navController: NavController?
+    navController: NavController?,
 ) {
     Box(
         modifier = Modifier
@@ -64,12 +65,4 @@ fun IconSurface(
         }
     }
 
-}
-
-@Preview
-@Composable
-fun IconSurfacePreview() {
-    BerryFarmerTheme {
-        IconSurface(null)
-    }
 }

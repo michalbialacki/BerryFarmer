@@ -17,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.presentation.start_screen.components.IconSurface
-import com.kkp.berryfarmer.presentation.start_screen.components.IconSurfacePreview
 import com.kkp.berryfarmer.ui.theme.BerryFarmerTheme
 
 @Composable

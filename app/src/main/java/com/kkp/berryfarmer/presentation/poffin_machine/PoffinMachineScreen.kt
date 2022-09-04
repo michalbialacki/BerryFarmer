@@ -1,18 +1,24 @@
 package com.kkp.berryfarmer.presentation.poffin_machine
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.kkp.berryfarmer.core.sensors.SensorData
+import com.kkp.berryfarmer.core.sensors.SensorHandler
 import com.kkp.berryfarmer.presentation.poffin_machine.components.BerryDialog
 import com.kkp.berryfarmer.presentation.poffin_machine.components.MainSurface
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 @Composable
@@ -20,9 +26,14 @@ fun PoffinMachineScreen(
     navController: NavController?,
     viewModel: PoffinMachineViewModel = hiltViewModel()
 ) {
-//    viewModel.getAcceleration()
     val berryList by remember { viewModel.berries}
     var dialogOpen = viewModel.dialogOpen
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var accelData by remember { mutableStateOf(SensorData("")) }
+    var poffinDone = viewModel.poffinDone
+
+
     if (dialogOpen){
         BerryDialog(
             berryList = berryList,
@@ -33,11 +44,37 @@ fun PoffinMachineScreen(
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
+
+
+        DisposableEffect(Unit){
+            val dataManager = SensorHandler(context)
+            val accelJob = scope.launch {
+                dataManager.accelData.receiveAsFlow().collect{
+                    accelData = it
+                }
+            }
+            onDispose {
+                dataManager.cancel()
+                accelJob.cancel()
+            }
+        }
+
+        when(accelData.accelerometer){
+            in listOf<String>("0.00","") -> {
+                viewModel.startShaking(Calendar.getInstance().timeInMillis)
+                poffinDone = viewModel.poffinDone
+            }
+            else ->{
+                poffinDone = viewModel.timeOfShaking(Calendar.getInstance().timeInMillis)
+                if(poffinDone){
+                    Toast.makeText(context,"Poffin done!",Toast.LENGTH_SHORT).show()
+
+                }
+            }
+        }
+
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
             MainSurface(berryList = berryList)
         }
-
-        Log.d("Accl", "PoffinMachineScreen: ${viewModel.prevAccl}")
-
     }
 }
