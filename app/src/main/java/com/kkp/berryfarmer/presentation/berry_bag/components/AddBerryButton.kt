@@ -19,6 +19,13 @@ import java.time.format.DateTimeFormatter
 fun AddBerryButton (
     viewModel : BerryBagViewModel = hiltViewModel(),
 ){
+    val testFlavMap = mapOf<String,String>(
+        "spicy" to "10",
+        "bitter" to "10",
+        "dry " to "10",
+        "sour" to "10",
+        "sweet" to "10"
+    )
     val context = LocalContext.current
     FloatingActionButton(
         onClick = {
@@ -26,7 +33,7 @@ fun AddBerryButton (
                 .ofPattern("yyyyMMddHHmmss")
                 .withZone(ZoneOffset.UTC)
                 .format(Instant.now())
-            val newBerry = Berry(timeStamp.toLong(),"Testo Berry","Spicy")
+            val newBerry = Berry(timeStamp.toLong(),"Testo Berry",testFlavMap)
             viewModel.addBerry(newBerry)
             Toast.makeText(context,"${newBerry}",Toast.LENGTH_SHORT).show()
 

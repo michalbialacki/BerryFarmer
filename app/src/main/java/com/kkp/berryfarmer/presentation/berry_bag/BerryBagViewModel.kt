@@ -17,7 +17,7 @@ class BerryBagViewModel @Inject constructor(
     private val repo : BerryRepository
 ) : ViewModel() {
     var berries = mutableStateOf(emptyList<Berry>())
-    var berry = mutableStateOf(Berry(0,"", ""))
+    var berry = mutableStateOf(Berry(0,"", emptyMap<String,String>()))
     var dialogOpen by mutableStateOf(false)
 
     init {

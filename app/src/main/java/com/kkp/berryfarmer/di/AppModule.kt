@@ -25,7 +25,8 @@ class AppModule {
         context,
         BerryDb::class.java,
         BERRY_TABLE
-    ).build()
+        ).fallbackToDestructiveMigration()
+        .build()
 
     @Provides
     fun provideBerryDao(

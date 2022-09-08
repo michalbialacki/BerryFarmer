@@ -10,5 +10,5 @@ data class Berry (
     @PrimaryKey(autoGenerate = false)
     val id : Long,
     val name : String,
-    val taste : String
+    val taste : Map<String,String>
     )

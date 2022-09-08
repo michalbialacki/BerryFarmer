@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.domain.model.Berry
 import com.kkp.berryfarmer.presentation.berry_bag.BerryBagViewModel
+import com.kkp.berryfarmer.presentation.qr_scan_screen.QRScanViewModel
 
 @Composable
 fun AddBerry(
@@ -17,11 +18,10 @@ fun AddBerry(
     message : String,
     showDialog : Boolean,
     onDismiss : () -> Unit,
-    viewModel : BerryBagViewModel = hiltViewModel()
+    viewModel : QRScanViewModel = hiltViewModel()
 )  {
     val context = LocalContext.current
-    val messageToBerry = message.removePrefix("BerryFarmerApplication:").split(";")
-    val berry = Berry(messageToBerry[2].toLong(),messageToBerry[0],"Spicy")
+    val berry = viewModel.convertQRToBerry(message)
     if (showDialog){
         AlertDialog(
             onDismissRequest = { onDismiss() },

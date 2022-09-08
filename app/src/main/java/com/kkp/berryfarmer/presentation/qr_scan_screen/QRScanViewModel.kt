@@ -27,4 +27,18 @@ class QRScanViewModel @Inject constructor(
     fun addBerry(berry: Berry) = viewModelScope.launch(Dispatchers.IO) {
         repo.addBerryToRoom(berry)
     }
+
+
+    fun convertQRToBerry (string : String) : Berry{
+        var flavMap = emptyMap<String,String>()
+        val stringToList = string.removePrefix("BerryFarmerApplication:").split(";")
+        val flavList = string[1].toString().removeSurrounding("{","}").split(",")
+        flavList.map {
+            val temp = it.split("=")
+            flavMap += mapOf<String,String>(temp[0] to temp[1])
+        }
+        return Berry(stringToList[2].toLong(),stringToList[0],flavMap)
+
+
+    }
 }

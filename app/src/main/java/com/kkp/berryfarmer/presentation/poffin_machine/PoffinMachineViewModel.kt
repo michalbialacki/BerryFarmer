@@ -18,8 +18,17 @@ import kotlin.math.sqrt
 class PoffinMachineViewModel @Inject constructor(
     private val repo : BerryRepository,
 ) : ViewModel () {
-
-    private val berriesUsed = mutableStateOf(mutableListOf<Berry>(Berry(0,"",""), Berry(0,"",""), Berry(0,"","")))
+    val testFlavMap = mapOf<String,String>(
+        "spicy" to "10",
+        "bitter" to "10",
+        "dry " to "10",
+        "sour" to "10",
+        "sweet" to "10"
+    )
+    private val berriesUsed = mutableStateOf(mutableListOf<Berry>(
+        Berry(0,"",testFlavMap),
+        Berry(0,"",testFlavMap), Berry(0,"",testFlavMap)
+    ))
     var berries = mutableStateOf(emptyList<Berry>())
     var dialogOpen by mutableStateOf(false)
     var berryIndex by mutableStateOf(0)
@@ -71,7 +80,7 @@ class PoffinMachineViewModel @Inject constructor(
 
     fun useBerries () {
         viewModelScope.launch(Dispatchers.IO) {
-            berriesUsed.value.fill(Berry(0,"",""))
+            berriesUsed.value.fill(Berry(0,"",testFlavMap))
         }
     }
 
@@ -81,7 +90,7 @@ class PoffinMachineViewModel @Inject constructor(
             if (berry.id.toString().length == 14){
                 repo.addBerryToRoom(berry = berry)
             }
-            berriesUsed.value[index] = Berry(0,"","")
+            berriesUsed.value[index] = Berry(0,"",testFlavMap)
         }
     }
 

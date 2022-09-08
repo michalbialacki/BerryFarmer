@@ -42,7 +42,7 @@ fun BerryInList(
         Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceEvenly) {
             Text(text = berry.id.toString())
             Text(text = berry.name)
-            Text(text = berry.taste)
+//            Text(text = berry.taste)
         }
     }
 
