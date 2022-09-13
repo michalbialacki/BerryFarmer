@@ -48,7 +48,6 @@ class PoffinMachineViewModel @Inject constructor(
     }
 
     fun timeOfShaking (newTmstp : Long) : Boolean {
-        Log.d("accel", "${(newTmstp - shakeStarted)}")
 
         return ((newTmstp - shakeStarted) in (10000L..11000L))
     }

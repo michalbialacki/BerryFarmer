@@ -4,16 +4,20 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kkp.berryfarmer.domain.model.Berry
+import com.kkp.berryfarmer.domain.model.Tree
 import com.kkp.berryfarmer.domain.repository.BerryRepository
+import com.kkp.berryfarmer.domain.repository.TreeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QRScanViewModel @Inject constructor(
-    private val repo : BerryRepository
-) : ViewModel() {
+    private val berryRepo : BerryRepository,
+    private val treeRepo : TreeRepository
+    ) : ViewModel() {
 
     var isDialogOpen by mutableStateOf(false)
 
@@ -24,8 +28,20 @@ class QRScanViewModel @Inject constructor(
         isDialogOpen = false
     }
 
-    fun addBerry(berry: Berry) = viewModelScope.launch(Dispatchers.IO) {
-        repo.addBerryToRoom(berry)
+    fun addBerryTree(tree: Tree) = viewModelScope.launch(Dispatchers.IO) {
+        treeRepo.addTreeToRoom(tree)
+    }
+
+    fun checkIfHarvestAvaliable(berry: Berry) = viewModelScope.launch ( Dispatchers.IO ){
+        try {
+            treeRepo.getTreeFromRoom(berry.id).collect(){
+                if (!it.harvested){
+//                    TODO("Add logic")
+                }
+            }
+        } catch (e:Exception){
+
+        }
     }
 
 

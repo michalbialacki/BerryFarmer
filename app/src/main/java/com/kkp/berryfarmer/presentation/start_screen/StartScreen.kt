@@ -1,5 +1,7 @@
 package com.kkp.berryfarmer.presentation.start_screen
 
+import android.icu.text.SimpleDateFormat
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +20,9 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.presentation.start_screen.components.IconSurface
 import com.kkp.berryfarmer.ui.theme.BerryFarmerTheme
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Composable
 fun StartScreen(
@@ -26,6 +31,9 @@ fun StartScreen(
 ) {
     Surface(modifier = Modifier
         .fillMaxSize()) {
+        val date = "20220204213700"
+        val format = SimpleDateFormat("yyyyMMddHHmmss",Locale.GERMAN)
+        Log.d("DateCheck", "StartScreen: ${format.parse(date)}")
         Column(modifier = Modifier
             .fillMaxSize()
             .background(Color.White)

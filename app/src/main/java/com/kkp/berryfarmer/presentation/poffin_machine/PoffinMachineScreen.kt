@@ -2,6 +2,7 @@ package com.kkp.berryfarmer.presentation.poffin_machine
 
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
@@ -39,6 +40,15 @@ fun PoffinMachineScreen(
             berryList = berryList,
             onDismiss = { viewModel.closeDialog() }
         )
+    }
+    BackHandler {
+        if(berryList.isNotEmpty()){
+            for (berryIndex in 0..2){
+                viewModel.berryRemovedFromMixer(berryIndex)
+            }
+        }
+        viewModel.timeOfShaking(Calendar.getInstance().timeInMillis)
+        navController!!.navigate("Start_Screen")
     }
 
     Surface(

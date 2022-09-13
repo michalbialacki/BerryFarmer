@@ -17,6 +17,7 @@ fun IconRow(
     navController: NavController?,
     navRoute : List<String>,
     icon : List<Int>,
+    animTime :Int = 0
 ) {
     if(navRoute.isNotEmpty() && icon.isNotEmpty() && navRoute.size == icon.size){
         val listSize = navRoute.size
@@ -37,7 +38,7 @@ fun IconRow(
                 NavIcon(
                     navController = navController,
                     navRoute = navRoute[index],
-                    icon = icon[index]
+                    icon = icon[index],
                 )
             }
         }

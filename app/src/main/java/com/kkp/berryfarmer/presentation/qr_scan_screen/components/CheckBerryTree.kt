@@ -8,12 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.kkp.berryfarmer.domain.model.Berry
-import com.kkp.berryfarmer.presentation.berry_bag.BerryBagViewModel
 import com.kkp.berryfarmer.presentation.qr_scan_screen.QRScanViewModel
 
 @Composable
-fun AddBerry(
+fun CheckBerryTree(
     navController: NavController,
     message : String,
     showDialog : Boolean,
@@ -27,7 +25,7 @@ fun AddBerry(
             onDismissRequest = { onDismiss() },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.addBerry(berry)
+//                    viewModel.addBerryTree(berry)
                     onDismiss()
                     Toast.makeText(
                         context,

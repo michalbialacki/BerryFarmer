@@ -39,6 +39,7 @@ fun IconSurface(
                 navController = navController,
                 navRoute = listOf("Tree_Check_Screen") ,
                 icon = listOf(R.drawable.tree_icon),
+                animTime = 100
             )
 
             IconRow(
@@ -51,6 +52,7 @@ fun IconSurface(
                     R.drawable.backpack_icon,
                     R.drawable.blender_icon
                 ),
+                animTime = 300
             )
             Spacer(modifier = Modifier
                 .fillMaxWidth()
@@ -60,6 +62,7 @@ fun IconSurface(
                 navController = navController,
                 navRoute = listOf("QR_Scan_Screen") ,
                 icon = listOf(R.drawable.qr_code_icon),
+                animTime = 500
             )
 
         }

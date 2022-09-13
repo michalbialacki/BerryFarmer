@@ -3,9 +3,7 @@ package com.kkp.berryfarmer.presentation.qr_scan_screen.components
 import android.content.pm.PackageManager
 import android.util.Size
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
@@ -29,13 +27,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.core.QRCodeAnalyzer
 import com.kkp.berryfarmer.presentation.qr_scan_screen.QRScanViewModel
 import java.lang.Exception
-import java.util.jar.Manifest
 
 @Composable
 fun QRScanner(
@@ -70,7 +65,7 @@ fun QRScanner(
         viewModel.openDialog()
     }
     if(isDialogOpen.value){
-        AddBerry(
+        CheckBerryTree(
             navController = navController,
             message = code,
             showDialog = isDialogOpen.value,
