@@ -26,8 +26,8 @@ class PoffinMachineViewModel @Inject constructor(
         "sweet" to "10"
     )
     private val berriesUsed = mutableStateOf(mutableListOf<Berry>(
-        Berry(0,"",testFlavMap),
-        Berry(0,"",testFlavMap), Berry(0,"",testFlavMap)
+        Berry(0,"",testFlavMap,0,0),
+        Berry(0,"",testFlavMap,0,0), Berry(0,"",testFlavMap,0,0)
     ))
     var berries = mutableStateOf(emptyList<Berry>())
     var dialogOpen by mutableStateOf(false)
@@ -79,7 +79,7 @@ class PoffinMachineViewModel @Inject constructor(
 
     fun useBerries () {
         viewModelScope.launch(Dispatchers.IO) {
-            berriesUsed.value.fill(Berry(0,"",testFlavMap))
+            berriesUsed.value.fill(Berry(0,"",testFlavMap,0,0))
         }
     }
 
@@ -89,7 +89,7 @@ class PoffinMachineViewModel @Inject constructor(
             if (berry.id.toString().length == 14){
                 repo.addBerryToRoom(berry = berry)
             }
-            berriesUsed.value[index] = Berry(0,"",testFlavMap)
+            berriesUsed.value[index] = Berry(0,"",testFlavMap,0,0)
         }
     }
 

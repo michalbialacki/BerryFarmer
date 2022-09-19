@@ -1,5 +1,6 @@
 package com.kkp.berryfarmer.presentation.berry_bag.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -33,9 +34,10 @@ fun AddBerryButton (
                 .ofPattern("yyyyMMddHHmmss")
                 .withZone(ZoneOffset.UTC)
                 .format(Instant.now())
-            val newBerry = Berry(timeStamp.toLong(),"Testo Berry",testFlavMap)
+            val newBerry = Berry(timeStamp.toLong(),"Testo Berry",testFlavMap,3,3)
             viewModel.addBerry(newBerry)
             Toast.makeText(context,"${newBerry}",Toast.LENGTH_SHORT).show()
+            Log.d("Berry", "${newBerry}")
 
         },
         backgroundColor = MaterialTheme.colors.primary

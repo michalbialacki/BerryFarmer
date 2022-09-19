@@ -13,6 +13,7 @@ import com.kkp.berryfarmer.presentation.berry_bag.BerryBagScreen
 import com.kkp.berryfarmer.presentation.poffin_machine.PoffinMachineScreen
 import com.kkp.berryfarmer.presentation.qr_scan_screen.QRScanScreen
 import com.kkp.berryfarmer.presentation.start_screen.StartScreen
+import com.kkp.berryfarmer.presentation.tree_check.TreeCheckScreen
 import com.kkp.berryfarmer.ui.theme.BerryFarmerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
                             PoffinMachineScreen(navController = navController)
                         }
                         composable("Tree_Check_Screen"){
-                            TODO("Add Tree check screen")
+                            TreeCheckScreen(navController = navController)
                         }
 
                 }

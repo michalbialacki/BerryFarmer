@@ -3,6 +3,7 @@ package com.kkp.berryfarmer.domain.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.kkp.berryfarmer.core.Constants
+import java.util.*
 
 @Entity(tableName = Constants.TREE_TABLE)
 data class Tree (
@@ -10,5 +11,5 @@ data class Tree (
     val id : Long,
     val name : String,
     val harvestDay : Long,
-    val harvested : Boolean
+//    val harvested : Boolean
 )

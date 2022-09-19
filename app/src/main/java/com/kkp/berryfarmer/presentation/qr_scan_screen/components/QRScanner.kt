@@ -38,8 +38,11 @@ fun QRScanner(
     viewModel: QRScanViewModel = hiltViewModel()
 ) {
     var code by remember {mutableStateOf("")}
+    var isTreeToHarvest = remember { mutableStateOf(false)}
     var isDialogOpen = remember { mutableStateOf(false)}
 
+
+//    isTreeToHarvest.value = viewModel.isTreeToHarvest
     isDialogOpen.value = viewModel.isDialogOpen
 
     val context = LocalContext.current

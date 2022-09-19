@@ -30,7 +30,7 @@ class QRCodeAnalyzer(
                 0,
                 image.width,
                 image.height,
-                false
+                true
             )
             val binaryBmp = BinaryBitmap(HybridBinarizer(source))
             try {

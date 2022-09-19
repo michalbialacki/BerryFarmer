@@ -9,7 +9,7 @@ import com.kkp.berryfarmer.domain.model.Tree
 
 @Database(
     entities = [Berry::class, Tree::class],
-    version = 3,
+    version = 5,
     exportSchema = false,
     )
 @TypeConverters(Converters::class)

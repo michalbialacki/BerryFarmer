@@ -1,10 +1,13 @@
 package com.kkp.berryfarmer.presentation.qr_scan_screen.components
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -18,14 +21,19 @@ fun CheckBerryTree(
     onDismiss : () -> Unit,
     viewModel : QRScanViewModel = hiltViewModel()
 )  {
+    Log.d("QRScan", "COOL")
     val context = LocalContext.current
     val berry = viewModel.convertQRToBerry(message)
-    if (showDialog){
+    var isTreeToHarvest = remember { mutableStateOf(false) }
+    isTreeToHarvest.value = viewModel.isTreeToHarvest
+
+    viewModel.checkIfHarvestAvaliable(tree = berry)
+    if (isTreeToHarvest.value){
         AlertDialog(
             onDismissRequest = { onDismiss() },
             confirmButton = {
                 TextButton(onClick = {
-//                    viewModel.addBerryTree(berry)
+                    viewModel.harvestBerry(berry = berry)
                     onDismiss()
                     Toast.makeText(
                         context,
@@ -52,7 +60,27 @@ fun CheckBerryTree(
             }
 
         )
-    }
+    }else{
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            confirmButton = {
+                TextButton(onClick = {
+                    onDismiss()
+
+                }) {
+                    Text(text = "Dismiss")
+                }
+            },
+            title = {
+                Text(text = "Be patient!")
+            },
+            text = {
+                Text(text = "You are doing great! This tree will bring you joy and delicious berries " +
+                        "as long as you care of it by watering this plant and providing the sunshine. " +
+                        "Great job!")
+            }
+
+        )    }
 
 
 }
