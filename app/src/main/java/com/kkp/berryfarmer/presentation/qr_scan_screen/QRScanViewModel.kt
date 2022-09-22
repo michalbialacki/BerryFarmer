@@ -1,7 +1,9 @@
 package com.kkp.berryfarmer.presentation.qr_scan_screen
 
 import android.util.Log
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kkp.berryfarmer.domain.model.Berry
@@ -51,23 +53,20 @@ class QRScanViewModel @Inject constructor(
                 treeRepo.getTreeFromRoom(tree.id).collect(){
                     val harvestDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN)
                         .parse("${it.harvestDay}")
-                    var currentDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN )
+                    val currentDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN )
                         .format(Calendar.getInstance().time)
                     val frmtdCurrDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN)
                         .parse(currentDate)
-                    Log.d("Tree", "${harvestDate.compareTo(frmtdCurrDate)}")
-
-                    if (frmtdCurrDate.compareTo(harvestDate) < 0){
-                        Log.d("Tree", "We're here")
-                        isTreeToHarvest = false
-                    } else{
-                        isTreeToHarvest = true
-
-                    }
+                    isTreeToHarvest = frmtdCurrDate!!.compareTo(harvestDate) >= 0
                 }
             } catch (e:Exception){
                 addBerryTree(tree = tree)
                 isTreeToHarvest = false
+            }
+            finally {
+                if(isTreeToHarvest){
+                    harvestBerry(tree)
+                }
             }
         }
     }
@@ -90,7 +89,7 @@ class QRScanViewModel @Inject constructor(
         val flavList = stringToList[1].removeSurrounding("{","}").split(",")
         flavList.map {
             val temp = it.split("=")
-            flavMap += mapOf<String,String>(temp[0] to temp[1])
+            flavMap += mapOf(temp[0] to temp[1])
         }
         val growthTime = stringToList[3].removePrefix(" ").toInt()
         val maxHarvest = stringToList[4].toInt()

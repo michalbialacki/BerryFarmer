@@ -75,8 +75,8 @@ fun CheckBerryTree(
                 Text(text = "Be patient!")
             },
             text = {
-                Text(text = "You are doing great! This tree will bring you joy and delicious berries " +
-                        "as long as you care of it by watering this plant and providing the sunshine. " +
+                Text(text = "You are doing great! This tree brought you joy and delicious berries " +
+                        "as  you cared of it by watering this plant and providing it the sunshine. " +
                         "Great job!")
             }
 

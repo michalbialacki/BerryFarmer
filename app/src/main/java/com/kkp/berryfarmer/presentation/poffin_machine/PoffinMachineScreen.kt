@@ -28,6 +28,7 @@ fun PoffinMachineScreen(
     viewModel: PoffinMachineViewModel = hiltViewModel()
 ) {
     val berryList by remember { viewModel.berries}
+    val berriesInMixer by remember { viewModel.berriesUsed}
     var dialogOpen = viewModel.dialogOpen
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -42,8 +43,8 @@ fun PoffinMachineScreen(
         )
     }
     BackHandler {
-        if(berryList.isNotEmpty()){
-            for (berryIndex in 0..2){
+        if(berriesInMixer.isNotEmpty()){
+            for (berryIndex in 0 until (berriesInMixer.size)){
                 viewModel.berryRemovedFromMixer(berryIndex)
             }
         }

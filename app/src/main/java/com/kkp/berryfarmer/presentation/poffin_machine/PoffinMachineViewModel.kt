@@ -19,13 +19,13 @@ class PoffinMachineViewModel @Inject constructor(
     private val repo : BerryRepository,
 ) : ViewModel () {
     val testFlavMap = mapOf<String,String>(
-        "spicy" to "10",
-        "bitter" to "10",
-        "dry " to "10",
-        "sour" to "10",
-        "sweet" to "10"
+        "spicy" to "0",
+        "bitter" to "0",
+        "dry " to "0",
+        "sour" to "0",
+        "sweet" to "0"
     )
-    private val berriesUsed = mutableStateOf(mutableListOf<Berry>(
+    val berriesUsed = mutableStateOf(mutableListOf<Berry>(
         Berry(0,"",testFlavMap,0,0),
         Berry(0,"",testFlavMap,0,0), Berry(0,"",testFlavMap,0,0)
     ))
@@ -48,7 +48,6 @@ class PoffinMachineViewModel @Inject constructor(
     }
 
     fun timeOfShaking (newTmstp : Long) : Boolean {
-
         return ((newTmstp - shakeStarted) in (10000L..11000L))
     }
 
@@ -61,7 +60,7 @@ class PoffinMachineViewModel @Inject constructor(
 
 
     fun getBerriesToChose () {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch{
             repo.getBerriesFromRoom().collect(){
                 berries.value = it
             }
@@ -78,15 +77,34 @@ class PoffinMachineViewModel @Inject constructor(
     }
 
     fun useBerries () {
-        viewModelScope.launch(Dispatchers.IO) {
-            berriesUsed.value.fill(Berry(0,"",testFlavMap,0,0))
+//        TODO("Get logic straight")
+        val poffinTasteMap = mutableMapOf<String,Int>()
+        for (berry in berriesUsed.value){
+            for (key in berry.taste.keys){
+                poffinTasteMap += Pair(
+                    key,
+                    poffinTasteMap[key]!! + berry.taste[key]!!.toInt())
+            }
         }
+        val maxValueName = poffinTasteMap.maxByOrNull { it.value }
+        var sameValueName = poffinTasteMap.filter { (_, value) ->
+            value == maxValueName!!.value
+        }
+        var poffinName = "${maxValueName!!.key}"
+        if (sameValueName.keys.size > 1){
+            sameValueName -= maxValueName!!.key
+            poffinName += (" - " + sameValueName.keys.first())
+        }
+        Log.d("Poffin Name", "useBerries: ${poffinName}")
+
+        berriesUsed.value.fill(Berry(0,"",testFlavMap,0,0))
+
     }
 
     fun berryRemovedFromMixer (index : Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val berry = berriesUsed.value[index]
-            if (berry.id.toString().length == 14){
+            if (berry.id.toString().length > 1){
                 repo.addBerryToRoom(berry = berry)
             }
             berriesUsed.value[index] = Berry(0,"",testFlavMap,0,0)

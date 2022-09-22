@@ -21,6 +21,7 @@ class TreeCheckViewModel @Inject constructor(
     var trees = mutableStateOf(emptyList<Tree>())
     var tree = mutableStateOf(Tree(0,"",202202042137))
     var dialogOpen by mutableStateOf(false)
+    var isLoading by mutableStateOf(true)
 
     init {
         getTrees()
@@ -28,9 +29,17 @@ class TreeCheckViewModel @Inject constructor(
     fun getTrees () = viewModelScope.launch {
         repo.getTreesFromRoom().collect(){ dbTrees ->
             trees.value += dbTrees
+            isLoading = false
         }
     }
     fun deleteTree(tree : Tree) = viewModelScope.launch(Dispatchers.IO) {
         repo.deleteTreeFromRoom(tree)
+    }
+
+    fun closeDialog () {
+        dialogOpen = false
+    }
+    fun openDialog (){
+        dialogOpen = true
     }
 }

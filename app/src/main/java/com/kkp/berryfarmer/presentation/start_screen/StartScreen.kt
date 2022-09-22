@@ -31,9 +31,6 @@ fun StartScreen(
 ) {
     Surface(modifier = Modifier
         .fillMaxSize()) {
-        val date = "20220204213700"
-        val format = SimpleDateFormat("yyyyMMddHHmmss",Locale.GERMAN)
-        Log.d("DateCheck", "StartScreen: ${format.parse(date)}")
         Column(modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
