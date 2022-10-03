@@ -73,13 +73,12 @@ fun PoffinMachineScreen(
         when(accelData.accelerometer){
             in listOf<String>("0.00","") -> {
                 viewModel.startShaking(Calendar.getInstance().timeInMillis)
-                poffinDone = viewModel.poffinDone
+
             }
             else ->{
                 poffinDone = viewModel.timeOfShaking(Calendar.getInstance().timeInMillis)
                 if(poffinDone){
-                    Toast.makeText(context,"Poffin done!",Toast.LENGTH_SHORT).show()
-
+                    Toast.makeText(context,"${viewModel.useBerries()}",Toast.LENGTH_SHORT).show()
                 }
             }
         }

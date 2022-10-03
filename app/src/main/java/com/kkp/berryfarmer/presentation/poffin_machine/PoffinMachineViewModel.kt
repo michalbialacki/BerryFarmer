@@ -11,8 +11,9 @@ import com.kkp.berryfarmer.domain.repository.BerryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.lang.NullPointerException
 import javax.inject.Inject
-import kotlin.math.sqrt
 
 @HiltViewModel
 class PoffinMachineViewModel @Inject constructor(
@@ -34,6 +35,7 @@ class PoffinMachineViewModel @Inject constructor(
     var berryIndex by mutableStateOf(0)
     var shakeStarted by mutableStateOf(0L)
     var poffinDone by mutableStateOf(false)
+    var poffinNameResult by mutableStateOf("")
 
     init {
         getBerriesToChose()
@@ -70,47 +72,63 @@ class PoffinMachineViewModel @Inject constructor(
     fun cacheBerry (
         berry: Berry
     ){
-        berriesUsed.value[berryIndex] = berry
         viewModelScope.launch(Dispatchers.IO) {
+            if(berriesUsed.value[berryIndex].name.length > 1){
+                repo.addBerryToRoom(berriesUsed.value[berryIndex])
+            }
+            berriesUsed.value[berryIndex] = berry
             repo.deleteBerryFromRoom(berry = berry)
         }
     }
 
-    fun useBerries () {
-//        TODO("Get logic straight")
-        val poffinTasteMap = mutableMapOf<String,Int>()
-        for (berry in berriesUsed.value){
-            for (key in berry.taste.keys){
-                poffinTasteMap += Pair(
-                    key,
-                    poffinTasteMap[key]!! + berry.taste[key]!!.toInt())
+    fun useBerries () : String {
+        var poffinName = ""
+        viewModelScope.launch {
+            val poffinTasteMap = mutableMapOf<String, Int>(
+                "spicy" to 0,
+                "bitter" to 0,
+                "dry " to 0,
+                "sour" to 0,
+                "sweet" to 0
+            )
+            for (berry in berriesUsed.value) {
+                for (key in berry.taste.keys){
+                    try {
+                        val addMap = mapOf<String,Int>(key to poffinTasteMap[key]!! + berry.taste[key]!!.toInt())
+                        poffinTasteMap += addMap
+                    }
+                    catch (e:NullPointerException){
+                        Log.d("Cheque", " DEAD but: ${poffinTasteMap.keys}")
+                    }
+
+                }
             }
-        }
-        val maxValueName = poffinTasteMap.maxByOrNull { it.value }
-        var sameValueName = poffinTasteMap.filter { (_, value) ->
-            value == maxValueName!!.value
-        }
-        var poffinName = "${maxValueName!!.key}"
-        if (sameValueName.keys.size > 1){
-            sameValueName -= maxValueName!!.key
-            poffinName += (" - " + sameValueName.keys.first())
-        }
-        Log.d("Poffin Name", "useBerries: ${poffinName}")
+            val maxValueName = poffinTasteMap.maxByOrNull { it.value }
+            var sameValueName = poffinTasteMap.filter { (_, value) ->
+                value == maxValueName!!.value
+            }
+            poffinName = "${maxValueName!!.key}"
+            if (sameValueName.keys.size > 1){
+                sameValueName -= maxValueName!!.key
+                poffinName += (" - " + sameValueName.keys.first())
+            }
 
-        berriesUsed.value.fill(Berry(0,"",testFlavMap,0,0))
-
+            berriesUsed.value.fill(Berry(0, "", testFlavMap, 0, 0))
+        }
+        return "Congratulations! You have made a ${poffinName} Poffin!"
     }
 
     fun berryRemovedFromMixer (index : Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val berry = berriesUsed.value[index]
-            if (berry.id.toString().length > 1){
-                repo.addBerryToRoom(berry = berry)
+            try {
+                val berry = berriesUsed.value[index]
+                if (berry.id.toString().length > 1){
+                    repo.addBerryToRoom(berry = berry)
+                }
+                berriesUsed.value[index] = Berry(0,"",testFlavMap,0,0)
+            } catch (e:Exception){
+                e.printStackTrace()
             }
-            berriesUsed.value[index] = Berry(0,"",testFlavMap,0,0)
         }
     }
-
-
-
 }

@@ -37,7 +37,6 @@ fun AddBerryButton (
             val newBerry = Berry(timeStamp.toLong(),"Testo Berry",testFlavMap,3,3)
             viewModel.addBerry(newBerry)
             Toast.makeText(context,"${newBerry}",Toast.LENGTH_SHORT).show()
-            Log.d("Berry", "${newBerry}")
 
         },
         backgroundColor = MaterialTheme.colors.primary

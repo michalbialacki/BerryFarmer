@@ -41,8 +41,6 @@ fun QRScanner(
     var isTreeToHarvest = remember { mutableStateOf(false)}
     var isDialogOpen = remember { mutableStateOf(false)}
 
-
-//    isTreeToHarvest.value = viewModel.isTreeToHarvest
     isDialogOpen.value = viewModel.isDialogOpen
 
     val context = LocalContext.current

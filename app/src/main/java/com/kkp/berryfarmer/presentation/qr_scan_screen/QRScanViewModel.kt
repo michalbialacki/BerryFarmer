@@ -1,6 +1,5 @@
 package com.kkp.berryfarmer.presentation.qr_scan_screen
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -75,7 +74,10 @@ class QRScanViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val newBerryQuantity = (1..berry.maxHarvest).random()
             for(index in 0 until (newBerryQuantity-1)){
-                val newBerryToBackpack = berry.copy(id = ((berry.id).toString() + index.toString()).toLong())
+                val newBerryToBackpack = berry.copy(
+                    id = ((berry.id).toString() + index.toString()).toLong(),
+                    name = berry.name.replaceFirstChar { it.uppercase() }
+                    )
                 berryRepo.addBerryToRoom(newBerryToBackpack)
             }
         }
