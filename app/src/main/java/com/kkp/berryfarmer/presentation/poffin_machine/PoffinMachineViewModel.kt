@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kkp.berryfarmer.core.TestBerry
 import com.kkp.berryfarmer.domain.model.Berry
 import com.kkp.berryfarmer.domain.repository.BerryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,8 +28,8 @@ class PoffinMachineViewModel @Inject constructor(
         "sweet" to "0"
     )
     val berriesUsed = mutableStateOf(mutableListOf<Berry>(
-        Berry(0,"",testFlavMap,0,0),
-        Berry(0,"",testFlavMap,0,0), Berry(0,"",testFlavMap,0,0)
+        TestBerry.testBerry,
+        TestBerry.testBerry, TestBerry.testBerry
     ))
     var berries = mutableStateOf(emptyList<Berry>())
     var dialogOpen by mutableStateOf(false)
@@ -73,7 +74,7 @@ class PoffinMachineViewModel @Inject constructor(
         berry: Berry
     ){
         viewModelScope.launch(Dispatchers.IO) {
-            if(berriesUsed.value[berryIndex].name.length > 1){
+            if(!berriesUsed.value[berryIndex].name.equals(TestBerry.testBerry.name)){
                 repo.addBerryToRoom(berriesUsed.value[berryIndex])
             }
             berriesUsed.value[berryIndex] = berry
@@ -98,7 +99,6 @@ class PoffinMachineViewModel @Inject constructor(
                         poffinTasteMap += addMap
                     }
                     catch (e:NullPointerException){
-                        Log.d("Cheque", " DEAD but: ${poffinTasteMap.keys}")
                     }
 
                 }
@@ -113,7 +113,7 @@ class PoffinMachineViewModel @Inject constructor(
                 poffinName += (" - " + sameValueName.keys.first())
             }
 
-            berriesUsed.value.fill(Berry(0, "", testFlavMap, 0, 0))
+            berriesUsed.value.fill(TestBerry.testBerry)
         }
         return "Congratulations! You have made a ${poffinName} Poffin!"
     }
@@ -125,7 +125,7 @@ class PoffinMachineViewModel @Inject constructor(
                 if (berry.id.toString().length > 1){
                     repo.addBerryToRoom(berry = berry)
                 }
-                berriesUsed.value[index] = Berry(0,"",testFlavMap,0,0)
+                berriesUsed.value[index] = TestBerry.testBerry
             } catch (e:Exception){
                 e.printStackTrace()
             }

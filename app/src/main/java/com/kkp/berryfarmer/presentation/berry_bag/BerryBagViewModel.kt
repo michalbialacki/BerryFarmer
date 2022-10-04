@@ -30,11 +30,13 @@ class BerryBagViewModel @Inject constructor(
         }
     }
 
-    fun getBerry(id : Int) = viewModelScope.launch {
-        repo.getBerryFromRoom(id).collect(){ dbBerry ->
-            berry.value = dbBerry
-        }
+    fun getBerry(workingBerry: Berry) = viewModelScope.launch {
+        berry.value = workingBerry
     }
+    fun passBerry() : Berry{
+        return berry.value
+    }
+
 
     fun addBerry(berry: Berry) = viewModelScope.launch(Dispatchers.IO) {
         repo.addBerryToRoom(berry)

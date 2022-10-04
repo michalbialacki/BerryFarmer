@@ -28,7 +28,7 @@ fun TreeCard(
 
     if (viewModel.dialogOpen){
         DeleteTreeDialog(
-            tree = tree,
+            tree = viewModel.passTree(),
             showDialog = viewModel.dialogOpen,
             onDismiss = { viewModel.closeDialog() }
         )
@@ -41,7 +41,8 @@ fun TreeCard(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
-                        viewModel.deleteTree(tree)
+                        viewModel.getTree(tree)
+                        viewModel.openDialog()
                     }
                 )
             }

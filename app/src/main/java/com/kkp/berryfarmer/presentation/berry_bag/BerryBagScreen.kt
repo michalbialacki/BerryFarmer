@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
@@ -47,14 +48,12 @@ fun BerryBagScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(gradient)
+                .background(MaterialTheme.colors.primary)
             ,
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ShowBerries(berriesList = berriesList)
-            AddBerryButton()
         }
-
     }
 }

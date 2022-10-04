@@ -23,7 +23,7 @@ fun AddAlertDialog(
                     viewModel.deleteBerry(berry)
                     onDismiss()
                 }) {
-                    Text(text = "Delete this berry")
+                    Text(text = "Delete this ${berry.name}")
                 }
             },
             dismissButton = {

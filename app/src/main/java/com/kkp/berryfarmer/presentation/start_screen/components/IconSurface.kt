@@ -3,6 +3,7 @@ package com.kkp.berryfarmer.presentation.start_screen.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,7 +24,7 @@ fun IconSurface(
             .fillMaxHeight()
             .fillMaxWidth(0.85f)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.LightGray)
+            .background(MaterialTheme.colors.primaryVariant)
     ){
         Column(
             modifier = Modifier

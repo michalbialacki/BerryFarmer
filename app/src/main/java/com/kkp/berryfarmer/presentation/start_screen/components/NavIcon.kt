@@ -36,7 +36,7 @@ fun NavIcon(
             .clip(CircleShape)
             .width(80.dp)
             .height(80.dp)
-            .background(Color(0xff3fe8c1))
+            .background(MaterialTheme.colors.secondary)
             .clickable {
                        navController!!.navigate(navRoute)
             },
