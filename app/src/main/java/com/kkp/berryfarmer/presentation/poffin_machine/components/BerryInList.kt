@@ -1,6 +1,7 @@
 package com.kkp.berryfarmer.presentation.poffin_machine.components
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +39,16 @@ fun BerryInList(
                 Toast.makeText(context,"Berry added to the mixer!",Toast.LENGTH_SHORT).show()
 
             }
+
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceEvenly) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .background(MaterialTheme.colors.background)
+        ) {
             Text(text = berry.id.toString())
             Text(text = berry.name)
-//            Text(text = berry.taste)
         }
     }
 

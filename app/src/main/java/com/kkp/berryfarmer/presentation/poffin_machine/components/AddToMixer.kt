@@ -20,15 +20,14 @@ fun AddToMixer(
         modifier = Modifier
             .fillMaxWidth()
             .height(iconHeight + 40.dp)
-            .offset(y = -60.dp)
+            .offset(y = -50.dp)
             .padding(
                 top = 2.dp,
                 bottom = 2.dp,
                 start = 4.dp,
                 end = 4.dp
-            )
-            .background(Color.LightGray),
-        horizontalArrangement = Arrangement.SpaceBetween
+            ),
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
 
         AddBerryIcon(index = 0)

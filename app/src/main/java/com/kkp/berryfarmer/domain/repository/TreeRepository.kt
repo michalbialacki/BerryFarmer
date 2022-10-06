@@ -12,4 +12,6 @@ interface TreeRepository {
     suspend fun addTreeToRoom(tree: Tree)
 
     suspend fun deleteTreeFromRoom(tree: Tree)
+
+    suspend fun updateTreeFromRoom(harvestDay : Long, id : Long)
 }

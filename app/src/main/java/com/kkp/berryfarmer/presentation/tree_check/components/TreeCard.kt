@@ -2,10 +2,7 @@ package com.kkp.berryfarmer.presentation.tree_check.components
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -38,6 +35,7 @@ fun TreeCard(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth()
+            .height(80.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
@@ -47,11 +45,27 @@ fun TreeCard(
                 )
             }
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally , verticalArrangement = Arrangement.SpaceEvenly) {
-            Text(text = tree.name.lowercase().replaceFirstChar { it.titlecase() })
-            Text(text = tree.id.toString())
-            val newDate = convertDate(tree.harvestDay.toString())
-           Text(text = newDate, textAlign = TextAlign.Center)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text(text = tree
+                .name
+                .lowercase()
+                .replaceFirstChar { it.titlecase() }
+            )
+            Text(text = tree
+                .id
+                .toString()
+            )
+            val newDate = convertDate(
+                tree
+                .harvestDay
+                .toString())
+           Text(
+               text = newDate,
+               textAlign = TextAlign.Center
+           )
         }
     }
 

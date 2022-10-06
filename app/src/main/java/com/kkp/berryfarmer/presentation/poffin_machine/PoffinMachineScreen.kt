@@ -3,8 +3,10 @@ package com.kkp.berryfarmer.presentation.poffin_machine
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.kkp.berryfarmer.core.sensors.SensorData
 import com.kkp.berryfarmer.core.sensors.SensorHandler
+import com.kkp.berryfarmer.presentation.poffin_machine.components.AddToMixer
 import com.kkp.berryfarmer.presentation.poffin_machine.components.BerryDialog
 import com.kkp.berryfarmer.presentation.poffin_machine.components.MainSurface
 import kotlinx.coroutines.flow.collect
@@ -78,13 +81,24 @@ fun PoffinMachineScreen(
             else ->{
                 poffinDone = viewModel.timeOfShaking(Calendar.getInstance().timeInMillis)
                 if(poffinDone){
-                    Toast.makeText(context,"${viewModel.useBerries()}",Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(
+                            context,
+                        "${viewModel.useBerries()}",
+                            Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-            MainSurface(berryList = berryList)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.primary),
+            contentAlignment = Alignment.Center){
+//            TODO("Change it a little to make it look better")
+//            MainSurface(berryList = berryList)
+            AddToMixer(berryList = berryList)
         }
     }
 }

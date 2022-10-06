@@ -121,14 +121,6 @@ fun QRScanner(
                 },
                 modifier = Modifier.weight(1f)
             )
-            Text(
-                text = code,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp)
-            )
         }
     }
 }

@@ -11,5 +11,4 @@ data class Tree (
     val id : Long,
     val name : String,
     val harvestDay : Long,
-//    val harvested : Boolean
 )

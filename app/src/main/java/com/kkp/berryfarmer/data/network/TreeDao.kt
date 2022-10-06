@@ -16,9 +16,9 @@ interface TreeDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addTree(tree : Tree)
-//
-//    @Query("UPDATE ${Constants.TREE_TABLE} SET harvested =:harvested WHERE id = :id")
-//    fun updateTree(harvestDay : Boolean, id: Long)
+
+    @Query("UPDATE ${Constants.TREE_TABLE} SET harvestDay =:harvestDay WHERE id = :id")
+    fun updateTree(harvestDay : Long, id: Long)
 
     @Delete
     fun deleteTree(tree : Tree)

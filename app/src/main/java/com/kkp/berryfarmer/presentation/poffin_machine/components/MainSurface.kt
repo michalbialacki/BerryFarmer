@@ -2,10 +2,13 @@ package com.kkp.berryfarmer.presentation.poffin_machine.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,15 +20,12 @@ import com.kkp.berryfarmer.ui.theme.BerryFarmerTheme
 
 @Composable
 fun MainSurface(
-//    navController: NavController?,
     berryList : List<Berry>
 ) {
 
     Box(
         modifier = Modifier
             .fillMaxSize(0.85f)
-            .background(Color.White)
-            .offset(y = 20.dp)
             .padding(
                 start = 4.dp,
                 end = 4.dp,
@@ -36,7 +36,13 @@ fun MainSurface(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.DarkGray)
+                .clip(RoundedCornerShape(10.dp))
+                .background(
+                    MaterialTheme
+                    .colors
+                    .primaryVariant
+                )
+            ,
         ) {
             AddToMixer(berryList = berryList)
         }

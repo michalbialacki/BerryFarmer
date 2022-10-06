@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -33,7 +34,7 @@ fun AddBerryIcon(
     Column {
         Row(modifier = Modifier
             .width(iconSize)
-            .offset(x = 20.dp)
+            .offset(x = 10.dp)
         ) {
 
             Spacer(modifier = Modifier
@@ -42,7 +43,11 @@ fun AddBerryIcon(
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .background(Color.White)
+                    .background(
+                        MaterialTheme
+                            .colors
+                            .secondary
+                    )
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
@@ -53,6 +58,8 @@ fun AddBerryIcon(
                         .clickable {
                             viewModel.berryRemovedFromMixer(index)
                         }
+                        .background(MaterialTheme.colors.secondaryVariant)
+
                 )
             }
 
@@ -60,7 +67,11 @@ fun AddBerryIcon(
         Box(
             modifier = Modifier
                 .clip(CircleShape)
-                .background(Color.White)
+                .background(
+                    MaterialTheme
+                        .colors
+                        .secondary
+                )
         ) {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -72,6 +83,7 @@ fun AddBerryIcon(
                         viewModel.openDialog()
                         viewModel.chooseBerry(index)
                     }
+                    .background(MaterialTheme.colors.secondaryVariant)
             )
         }
     }

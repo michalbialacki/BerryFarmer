@@ -21,7 +21,6 @@ fun CheckBerryTree(
     onDismiss : () -> Unit,
     viewModel : QRScanViewModel = hiltViewModel()
 )  {
-    Log.d("QRScan", "COOL")
     val context = LocalContext.current
     val berry = viewModel.convertQRToBerry(message)
     var isTreeToHarvest = remember { mutableStateOf(false) }

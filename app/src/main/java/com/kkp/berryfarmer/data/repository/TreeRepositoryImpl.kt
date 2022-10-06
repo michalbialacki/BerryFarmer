@@ -19,4 +19,6 @@ class TreeRepositoryImpl(
 
     override suspend fun deleteTreeFromRoom(tree: Tree) = treeDao.deleteTree(tree)
 
+    override suspend fun updateTreeFromRoom(harvestDay : Long, id : Long) = treeDao.updateTree(harvestDay, id)
+
 }

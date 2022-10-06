@@ -1,5 +1,6 @@
 package com.kkp.berryfarmer.presentation.qr_scan_screen
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,6 +25,7 @@ class QRScanViewModel @Inject constructor(
 
     var isDialogOpen by mutableStateOf(false)
     var isTreeToHarvest by mutableStateOf(false)
+    private val dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
 
     fun openDialog() {
         isDialogOpen = true
@@ -47,14 +49,15 @@ class QRScanViewModel @Inject constructor(
     }
 
     fun checkIfHarvestAvaliable(tree: Berry) {
-        viewModelScope.launch ( Dispatchers.IO ){
+
+        viewModelScope.launch{
             try {
                 treeRepo.getTreeFromRoom(tree.id).collect(){
-                    val harvestDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN)
-                        .parse("${it.harvestDay}")
-                    val currentDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN )
+                    val harvestDate = dateFormat
+                        .parse(tree.id.toString())
+                    val currentDate = dateFormat
                         .format(Calendar.getInstance().time)
-                    val frmtdCurrDate = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN)
+                    val frmtdCurrDate = dateFormat
                         .parse(currentDate)
                     isTreeToHarvest = frmtdCurrDate!!.compareTo(harvestDate) >= 0
                 }
@@ -73,12 +76,18 @@ class QRScanViewModel @Inject constructor(
     fun harvestBerry(berry: Berry) {
         viewModelScope.launch(Dispatchers.IO) {
             val newBerryQuantity = (1..berry.maxHarvest).random()
+            val newHarvestTime = Calendar.getInstance()
+            newHarvestTime.add(Calendar.DATE, 3)
+            val harvestDay = SimpleDateFormat("yyyyMMddHHmmss", Locale.GERMAN )
+                .format(newHarvestTime.time).toLong()
+
             for(index in 0 until (newBerryQuantity-1)){
                 val newBerryToBackpack = berry.copy(
                     id = ((berry.id).toString() + index.toString()).toLong(),
-                    name = berry.name.replaceFirstChar { it.uppercase() }
+                    name = berry.name.replaceFirstChar { it.titlecase() }
                     )
                 berryRepo.addBerryToRoom(newBerryToBackpack)
+                treeRepo.updateTreeFromRoom(harvestDay,berry.id)
             }
         }
     }
