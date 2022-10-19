@@ -58,7 +58,7 @@ fun BerryCard(
                     .padding(8.dp)
                     .fillMaxHeight()
             ) {
-                Text(text = berry.name)
+                Text(text = berry.name.lowercase().replaceFirstChar { it.titlecase() })
                 Text(text = viewModel.convertDate(berry.id.toString()))
                 Spacer(modifier = Modifier
                     .height(80.dp)

@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             BerryFarmerTheme {
                     val navController = rememberNavController()
-//                    NavHost(navController = navController, startDestination = "Start_Screen"){
                 NavHost(navController = navController, startDestination = "Start_Screen"){
                         composable("Start_Screen"){
                             StartScreen(navController = navController)
@@ -45,18 +44,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BerryFarmerTheme {
-        Greeting("Android")
     }
 }
